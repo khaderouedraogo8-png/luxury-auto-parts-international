@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Remplacez l’URL ci-dessous par le domaine de production, puis décommentez.
+# Sitemap: https://VOTRE-DOMAINE/sitemap.xml

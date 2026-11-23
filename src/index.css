@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+@theme {
+  --color-carbon: #111214;
+  --color-carbon-soft: #17191d;
+  --color-steel: #1c1e23;
+  --color-graphite: #2a2d33;
+  --color-silver: #c5c7cb;
+  --color-silver-dim: #8d9096;
+  --color-ivory: #f4f4f6;
+  --color-crimson: #8e1820;
+  --color-crimson-hover: #a81d27;
+  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--color-carbon);
+  color: var(--color-ivory);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-crimson);
+  color: white;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-crimson);
+  outline-offset: 3px;
+}
+
+.hairline {
+  border-color: rgb(197 199 203 / 0.16);
+}
+
+.tech-grid {
+  background-image:
+    linear-gradient(to right, rgb(197 199 203 / 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(197 199 203 / 0.035) 1px, transparent 1px);
+  background-size: 56px 56px;
+}

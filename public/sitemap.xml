@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Remplacez https://VOTRE-DOMAINE par l’URL de production avant mise en ligne. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://VOTRE-DOMAINE/</loc><changefreq>monthly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://VOTRE-DOMAINE/produits</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://VOTRE-DOMAINE/produits/vitres-et-pare-brise</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://VOTRE-DOMAINE/produits/pare-chocs</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://VOTRE-DOMAINE/produits/phares-avant</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://VOTRE-DOMAINE/produits/feux-arriere</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://VOTRE-DOMAINE/produits/accessoires-carrosserie</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://VOTRE-DOMAINE/services</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://VOTRE-DOMAINE/a-propos</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://VOTRE-DOMAINE/contact</loc><changefreq>yearly</changefreq><priority>0.9</priority></url>
+</urlset>
