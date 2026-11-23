@@ -24,7 +24,7 @@ export const services: ServiceItem[] = [
       "Contrôle d’ajustement et de finition",
     ],
     image: "/images/service-pose.jpg",
-    imageAlt: "Intervention technique sur un véhicule en atelier",
+    imageAlt: "Technicien carrossier en tenue officielle ajustant un pare-chocs et un bloc optique en atelier",
     whatsappTopic: "une pose de pièce automobile",
   },
   {
@@ -41,7 +41,7 @@ export const services: ServiceItem[] = [
       "Remise en état extérieure du véhicule",
     ],
     image: "/images/service-remplacement.jpg",
-    imageAlt: "Technicien travaillant sur la carrosserie d’un véhicule",
+    imageAlt: "Technicien carrossier ajustant et montant un phare LED neuf sur un véhicule en atelier",
     whatsappTopic: "un remplacement de pièce",
   },
   {
@@ -58,7 +58,7 @@ export const services: ServiceItem[] = [
       "Conseil selon le besoin du véhicule",
     ],
     image: "/images/service-installation.jpg",
-    imageAlt: "Outils et intervention d’installation automobile",
+    imageAlt: "Ensemble d'accessoires de carrosserie et équipements prêts pour installation",
     whatsappTopic: "une installation d’équipement",
   },
 ];

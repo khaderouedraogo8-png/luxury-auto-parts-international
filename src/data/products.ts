@@ -26,7 +26,7 @@ export const productCategories: ProductCategory[] = [
       "Orientation selon marque et modèle",
     ],
     image: "/images/vitres-pare-brise.jpg",
-    imageAlt: "Pare-brise et vitrage d’un véhicule vu depuis l’habitacle",
+    imageAlt: "Pare-brise avant automobile et vitrage de carrosserie sur support d’exposition",
     whatsappTopic: "un pare-brise ou une vitre",
   },
   {
@@ -44,7 +44,7 @@ export const productCategories: ProductCategory[] = [
       "Supports et éléments de fixation",
     ],
     image: "/images/pare-chocs.jpg",
-    imageAlt: "Avant d’un véhicule mettant en évidence le pare-chocs",
+    imageAlt: "Pare-chocs avant automobile complet avec calandre et prises d’air",
     whatsappTopic: "un pare-chocs",
   },
   {
@@ -62,7 +62,7 @@ export const productCategories: ProductCategory[] = [
       "Conseil d’adéquation au modèle",
     ],
     image: "/images/phares-avant.jpg",
-    imageAlt: "Phare avant d’un véhicule en gros plan",
+    imageAlt: "Bloc optique avant projecteur LED et signature lumineuse haute précision",
     whatsappTopic: "un phare avant",
   },
   {
@@ -80,7 +80,7 @@ export const productCategories: ProductCategory[] = [
       "Accompagnement pour le bon modèle",
     ],
     image: "/images/feux-arriere.jpg",
-    imageAlt: "Feux arrière d’un véhicule en éclairage de nuit",
+    imageAlt: "Bloc feux arrière automobile complet avec signature LED rouge rubis",
     whatsappTopic: "un feu arrière",
   },
   {
@@ -98,7 +98,7 @@ export const productCategories: ProductCategory[] = [
       "Demandes étudiées au cas par cas",
     ],
     image: "/images/accessoires-carrosserie.jpg",
-    imageAlt: "Détail de carrosserie automobile",
+    imageAlt: "Accessoires de carrosserie : coques de rétroviseur carbone, spoiler et calandre sport",
     whatsappTopic: "un accessoire ou une pièce de carrosserie",
   },
 ];
