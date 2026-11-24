@@ -25,9 +25,24 @@ export function Header() {
   return (
     <header
       className={`sticky top-0 z-50 border-b hairline transition-colors ${
-        scrolled ? "border-silver/20 bg-carbon/95 backdrop-blur-md" : "border-transparent bg-carbon/80 backdrop-blur-sm"
+        scrolled ? "border-silver/20 bg-carbon/95 backdrop-blur-md" : "border-silver/10 bg-carbon/90 backdrop-blur-sm"
       }`}
     >
+      {/* Barre supérieure d'informations atelier (Desktop) */}
+      <div className="hidden border-b hairline bg-steel/70 px-4 py-1.5 font-mono text-[11px] text-silver sm:block sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="uppercase tracking-wider">Atelier & Comptoir Ouagadougou • Devis & Disponibilité Express</span>
+          </div>
+          <div className="flex items-center gap-4">
+            <span>Appel direct : <strong className="text-ivory">{company.phone.display}</strong></span>
+            <span className="text-silver/40">|</span>
+            <span>WhatsApp : <strong className="text-ivory">{company.whatsapp.display}</strong></span>
+          </div>
+        </div>
+      </div>
+
       <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between gap-4 px-4 sm:h-20 sm:px-6 lg:px-8">
         <Link to="/" className="flex min-w-0 items-center gap-3" onClick={() => setOpen(false)}>
           <img
