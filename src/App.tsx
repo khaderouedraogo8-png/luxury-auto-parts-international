@@ -25,6 +25,11 @@ export default function App() {
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/a-propos" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        {/* Aliases & Redirects */}
+        <Route path="/nos-pieces" element={<Navigate to="/produits" replace />} />
+        <Route path="/nos-prestations" element={<Navigate to="/services" replace />} />
+        <Route path="/pieces" element={<Navigate to="/produits" replace />} />
+        <Route path="/devis" element={<Navigate to="/contact#devis" replace />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

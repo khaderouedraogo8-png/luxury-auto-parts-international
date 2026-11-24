@@ -1,85 +1,174 @@
-import { ButtonLink } from "../components/ui/ButtonLink";
+import { Link } from "react-router-dom";
 import { Seo } from "../components/seo/Seo";
-import { InquiryForm } from "../components/contact/InquiryForm";
 import { company } from "../data/company";
-import { services } from "../data/services";
-import { inquiryMessage, whatsappUrl } from "../lib/whatsapp";
 
 export function ServicesPage() {
   return (
     <>
       <Seo
-        title={`Nos services — ${company.legalName}`}
-        description="Prestations techniques : pose de pièces automobiles, remplacement d’éléments endommagés et installation d’équipements de carrosserie."
+        title={`Nos prestations techniques — ${company.legalName}`}
+        description="Pose de pare-brise et vitres, remplacement de composants endommagés et installation soignée de pièces de carrosserie à Ouagadougou. Accompagnement technique complet."
         path="/services"
       />
 
-      <section className="border-b border-silver/10 px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
-        <div className="mx-auto max-w-7xl">
-          <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-crimson">
-            Atelier
-          </p>
-          <h1 className="mt-4 max-w-4xl font-display text-4xl font-bold uppercase leading-[0.95] text-ivory sm:text-6xl">
-            Nos services
+      {/* En-tête prestations */}
+      <section className="bg-dark-surface text-dark-on-surface border-b border-dark-outline-variant py-12 md:py-16">
+        <div className="max-w-7xl mx-auto px-5 md:px-8 flex flex-col gap-4 max-w-3xl">
+          <span className="font-label text-xs uppercase tracking-widest text-argent-metallique font-semibold">
+            Interventions techniques
+          </span>
+          <h1 className="font-display text-3xl sm:text-4xl lg:text-[48px] font-semibold leading-[1.1] text-dark-on-surface text-balance">
+            Pose, remplacement et installation de carrosserie.
           </h1>
-          <p className="mt-5 max-w-2xl text-base leading-relaxed text-silver">
-            {company.legalName} complète la vente de pièces par un accompagnement technique pour
-            la remise en état extérieure des véhicules : pose, remplacement et installation.
+          <p className="font-body text-base md:text-lg text-dark-on-surface-variant text-pretty leading-relaxed">
+            De la fourniture de la pièce jusqu'à son montage final sur votre véhicule, bénéficiez d'une prise en charge technique complète et rigoureuse.
           </p>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl space-y-16 px-4 py-14 sm:px-6 lg:px-8">
-        {services.map((item, index) => (
-          <article
-            key={item.slug}
-            id={item.slug}
-            className={`grid items-center gap-8 lg:grid-cols-2 ${index % 2 === 1 ? "lg:[&>img]:order-2" : ""}`}
-          >
-            <img
-              src={item.image}
-              alt={item.imageAlt}
-              className="aspect-[16/10] w-full object-cover"
-              loading="lazy"
-            />
-            <div>
-              <h2 className="font-display text-3xl font-semibold uppercase text-ivory">
-                {item.title}
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-silver">{item.description}</p>
-              <ul className="mt-5 space-y-2 text-sm text-silver">
-                {item.points.map((point) => (
-                  <li key={point} className="flex gap-2">
-                    <span className="mt-2 h-1 w-1 shrink-0 bg-crimson" />
-                    {point}
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-7">
-                <ButtonLink
-                  href={whatsappUrl(inquiryMessage({ topic: item.whatsappTopic }))}
-                  external
-                >
-                  Demander cette intervention
-                </ButtonLink>
+      {/* Les 3 prestations principales */}
+      <section className="bg-light-surface py-16 md:py-24 border-b border-light-outline-variant">
+        <div className="max-w-7xl mx-auto px-5 md:px-8 flex flex-col gap-16">
+          {/* Prestation 1 : Pose de pare-brise et de vitres */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            <div className="lg:col-span-6">
+              <div className="rounded-lg overflow-hidden border border-light-outline-variant bg-noir-profond shadow-md">
+                <img
+                  src="/images/service-remplacement.jpg"
+                  alt="Pose de pare-brise et de vitres automobiles"
+                  className="w-full aspect-[4/3] object-cover"
+                />
               </div>
             </div>
-          </article>
-        ))}
+            <div className="lg:col-span-6 flex flex-col gap-4">
+              <span className="font-label text-xs uppercase tracking-widest text-light-primary font-semibold">
+                Vitrage automobile
+              </span>
+              <h2 className="font-headline text-2xl sm:text-3xl font-semibold text-light-on-surface">
+                Pose de pare-brise et de vitres
+              </h2>
+              <p className="font-body text-base text-light-on-surface-variant text-pretty leading-relaxed">
+                Installation de pare-brise avant, lunettes arrière et vitres latérales avec un ajustement précis et une étanchéité maîtrisée. Nous assurons la fourniture du vitrage et sa pose complète.
+              </p>
+              <div className="pt-2">
+                <Link
+                  to="/contact#devis"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded bg-light-primary text-light-on-primary font-label text-sm font-semibold transition-colors duration-150 hover:bg-noir-profond"
+                >
+                  <span>Demander un devis pour cette prestation</span>
+                  <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
+                    arrow_forward
+                  </span>
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* Prestation 2 : Remplacement de composants endommagés */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            <div className="lg:col-span-6 lg:order-2">
+              <div className="rounded-lg overflow-hidden border border-light-outline-variant bg-noir-profond shadow-md">
+                <img
+                  src="/images/service-pose.jpg"
+                  alt="Remplacement de composants de carrosserie endommagés"
+                  className="w-full aspect-[4/3] object-cover"
+                />
+              </div>
+            </div>
+            <div className="lg:col-span-6 lg:order-1 flex flex-col gap-4">
+              <span className="font-label text-xs uppercase tracking-widest text-light-primary font-semibold">
+                Remise en état
+              </span>
+              <h2 className="font-headline text-2xl sm:text-3xl font-semibold text-light-on-surface">
+                Remplacement de composants endommagés
+              </h2>
+              <p className="font-body text-base text-light-on-surface-variant text-pretty leading-relaxed">
+                Dépose des éléments fissurés ou détériorés (pare-chocs, phares avant, feux arrière, rétroviseurs) et remplacement par des pièces neuves adaptées à votre véhicule.
+              </p>
+              <div className="pt-2">
+                <Link
+                  to="/contact#devis"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded bg-light-primary text-light-on-primary font-label text-sm font-semibold transition-colors duration-150 hover:bg-noir-profond"
+                >
+                  <span>Demander un devis pour cette prestation</span>
+                  <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
+                    arrow_forward
+                  </span>
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* Prestation 3 : Installation de pièces de carrosserie */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            <div className="lg:col-span-6">
+              <div className="rounded-lg overflow-hidden border border-light-outline-variant bg-noir-profond shadow-md">
+                <img
+                  src="/images/accessoires-carrosserie.jpg"
+                  alt="Installation de pièces de carrosserie et optiques"
+                  className="w-full aspect-[4/3] object-cover"
+                />
+              </div>
+            </div>
+            <div className="lg:col-span-6 flex flex-col gap-4">
+              <span className="font-label text-xs uppercase tracking-widest text-light-primary font-semibold">
+                Montage complet
+              </span>
+              <h2 className="font-headline text-2xl sm:text-3xl font-semibold text-light-on-surface">
+                Installation de pièces de carrosserie
+              </h2>
+              <p className="font-body text-base text-light-on-surface-variant text-pretty leading-relaxed">
+                Montage technique des éléments de carrosserie, blocs optiques et accessoires extérieurs avec contrôle d'alignement et de fixation sur votre véhicule.
+              </p>
+              <div className="pt-2">
+                <Link
+                  to="/contact#devis"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded bg-light-primary text-light-on-primary font-label text-sm font-semibold transition-colors duration-150 hover:bg-noir-profond"
+                >
+                  <span>Demander un devis pour cette prestation</span>
+                  <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
+                    arrow_forward
+                  </span>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
-      <section className="border-t border-silver/10 bg-carbon-soft px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-2">
-          <div>
-            <h2 className="font-display text-3xl font-bold uppercase text-ivory">
-              Demander une intervention
+      {/* Complémentarité Fourniture + Installation */}
+      <section className="bg-dark-surface-container-low text-dark-on-surface py-16 md:py-20 border-b border-dark-outline-variant">
+        <div className="max-w-5xl mx-auto px-5 md:px-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+          <div className="flex flex-col gap-2 max-w-2xl">
+            <span className="font-label text-xs uppercase tracking-widest text-argent-metallique font-semibold">
+              Solution intégrée
+            </span>
+            <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-semibold text-dark-on-surface">
+              Fourniture + Pose : un seul interlocuteur.
             </h2>
-            <p className="mt-4 text-silver">
-              Précisez la prestation souhaitée et, si possible, le véhicule concerné. Le message
-              est transmis via WhatsApp.
+            <p className="font-body text-base text-dark-on-surface-variant text-pretty leading-relaxed">
+              Associez la recherche de votre pièce de carrosserie à son installation technique pour gagner du temps et garantir la compatibilité sur votre véhicule.
             </p>
           </div>
-          <InquiryForm intent="devis" />
+          <div className="flex flex-col sm:flex-row gap-3 shrink-0 w-full md:w-auto">
+            <Link
+              to="/contact#devis"
+              className="inline-flex items-center justify-center px-6 py-3.5 rounded bg-light-primary text-light-on-primary font-label text-sm font-semibold hover:bg-dark-surface-container transition-colors"
+            >
+              Demander un devis
+            </Link>
+            <a
+              href="https://wa.me/22668681869?text=Bonjour%20Luxury%20Auto%20Parts%20International%2C%20je%20souhaite%20un%20devis%20Fourniture%20%2B%20Installation."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded border border-argent-metallique text-dark-on-surface font-label text-sm font-semibold hover:bg-dark-surface-container transition-colors"
+            >
+              <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
+                chat
+              </span>
+              <span>WhatsApp</span>
+            </a>
+          </div>
         </div>
       </section>
     </>

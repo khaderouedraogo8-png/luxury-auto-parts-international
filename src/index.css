@@ -1,18 +1,60 @@
 @import "tailwindcss";
 
 @theme {
-  --color-carbon: #111214;
-  --color-carbon-soft: #17191d;
-  --color-steel: #1c1e23;
-  --color-graphite: #2a2d33;
-  --color-silver: #c5c7cb;
-  --color-silver-dim: #8d9096;
-  --color-ivory: #f4f4f6;
-  --color-crimson: #8e1820;
-  --color-crimson-hover: #a81d27;
-  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
-  --font-sans: "Inter", system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --color-noir-profond: #111214;
+  --color-argent-metallique: #c5c7cb;
+  --color-rouge-profond: #8e1820;
+  --color-accent: #8e1820;
+  --color-on-accent: #ffffff;
+  --color-success: #1b6e3d;
+  --color-on-success: #ffffff;
+  --color-warning: #9a5b00;
+  --color-on-warning: #ffffff;
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+
+  --color-light-primary: #8e1820;
+  --color-light-on-primary: #ffffff;
+  --color-light-primary-container: #ffdad7;
+  --color-light-on-primary-container: #410005;
+  --color-light-secondary: #111214;
+  --color-light-on-secondary: #ffffff;
+  --color-light-surface: #fdfcfe;
+  --color-light-surface-container-low: #f2f0f3;
+  --color-light-surface-container: #e3e2e4;
+  --color-light-surface-container-high: #c5c7cb;
+  --color-light-on-surface: #111214;
+  --color-light-on-surface-variant: #44474a;
+  --color-light-outline: #75777b;
+  --color-light-outline-variant: #c5c7cb;
+
+  --color-dark-primary: #8e1820;
+  --color-dark-on-primary: #ffffff;
+  --color-dark-secondary: #c5c7cb;
+  --color-dark-on-secondary: #111214;
+  --color-dark-surface: #111214;
+  --color-dark-surface-container-low: #191c1f;
+  --color-dark-surface-container: #2e3134;
+  --color-dark-surface-container-high: #44474a;
+  --color-dark-on-surface: #eff1f5;
+  --color-dark-on-surface-variant: #c5c7cb;
+  --color-dark-outline: #8e9195;
+  --color-dark-outline-variant: #2e3134;
+
+  --font-display: "Afacad Flux", sans-serif;
+  --font-headline: "Afacad Flux", sans-serif;
+  --font-title: "Afacad Flux", sans-serif;
+  --font-body: "Instrument Sans", sans-serif;
+  --font-label: "Instrument Sans", sans-serif;
+  --font-mono: "Source Code Pro", monospace;
+
+  --spacing-gutter-xs: 4px;
+  --spacing-gutter-sm: 8px;
+  --spacing-gutter-md: 16px;
+  --spacing-gutter-lg: 24px;
+  --spacing-gutter-xl: 32px;
+  --spacing-section: 64px;
+  --spacing-page-margin: 20px;
 }
 
 html {
@@ -35,64 +77,33 @@ html {
 
 body {
   margin: 0;
-  background: var(--color-carbon);
-  color: var(--color-ivory);
-  font-family: var(--font-sans);
+  background-color: var(--color-light-surface);
+  color: var(--color-light-on-surface);
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
-  background: var(--color-crimson);
-  color: white;
+  background-color: var(--color-rouge-profond);
+  color: var(--color-light-on-primary);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-crimson);
+  outline: 2px solid var(--color-rouge-profond);
   outline-offset: 3px;
 }
 
-.hairline {
-  border-color: rgb(197 199 203 / 0.16);
-}
-
-.hairline-border-strong {
-  border-color: rgb(197 199 203 / 0.28);
-}
-
-.tech-grid {
-  background-image:
-    linear-gradient(to right, rgb(197 199 203 / 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(197 199 203 / 0.04) 1px, transparent 1px);
-  background-size: 48px 48px;
-}
-
-.corner-tick {
-  position: relative;
-}
-
-.corner-tick::before,
-.corner-tick::after {
-  content: "";
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  pointer-events: none;
-}
-
-.corner-tick::before {
-  top: -1px;
-  left: -1px;
-  border-top: 2px solid var(--color-crimson);
-  border-left: 2px solid var(--color-crimson);
-}
-
-.corner-tick::after {
-  bottom: -1px;
-  right: -1px;
-  border-bottom: 2px solid var(--color-crimson);
-  border-right: 2px solid var(--color-crimson);
-}
-
-.glow-crimson {
-  box-shadow: 0 0 25px -5px rgb(142 24 32 / 0.35);
+.material-symbols-outlined,
+.material-symbols-rounded,
+.material-symbols-sharp,
+.material-icons {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1 !important;
+  box-sizing: content-box;
+  overflow: hidden;
+  white-space: nowrap;
+  direction: ltr;
+  vertical-align: middle;
 }

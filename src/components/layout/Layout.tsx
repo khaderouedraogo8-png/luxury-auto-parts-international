@@ -12,15 +12,15 @@ export function Layout() {
   }, [location.pathname]);
 
   return (
-    <div className="min-h-dvh bg-carbon text-ivory">
+    <div className="min-h-screen flex flex-col bg-light-surface text-light-on-surface font-body antialiased selection:bg-rouge-profond selection:text-light-on-primary">
       <a
         href="#contenu"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:bg-crimson focus:px-4 focus:py-2"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:bg-rouge-profond focus:text-white focus:px-4 focus:py-2 focus:rounded"
       >
         Aller au contenu
       </a>
       <Header />
-      <main id="contenu">
+      <main id="contenu" className="flex-1">
         <Outlet />
       </main>
       <Footer />

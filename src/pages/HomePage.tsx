@@ -1,538 +1,544 @@
-import { useState } from "react";
-import {
-  ArrowRight,
-  ChevronRight,
-  Eye,
-  MessageCircle,
-  Phone,
-  ShieldCheck,
-  Wrench,
-} from "lucide-react";
 import { Link } from "react-router-dom";
 import { Seo } from "../components/seo/Seo";
 import { company } from "../data/company";
-import { productCategories, type ProductCategory } from "../data/products";
-import { inquiryMessage, whatsappUrl } from "../lib/whatsapp";
-
-const pieceSpecs: Record<string, { badge: string; highlight: string; fits: string }> = {
-  "vitres-et-pare-brise": {
-    badge: "VERRE FEUILLETÉ SÉCURITÉ",
-    highlight: "Double vitrage acoustique et traitement anti-UV",
-    fits: "Berlines, SUV, 4x4 et utilitaires",
-  },
-  "pare-chocs": {
-    badge: "ABS & POLYPROPYLÈNE HAUTE RÉSISTANCE",
-    highlight: "Conformité géométrique d'origine et absorbeurs de chocs",
-    fits: "Boucliers avant et arrière complets",
-  },
-  "phares-avant": {
-    badge: "OPTIQUE LED & XÉNON CRISTALLIN",
-    highlight: "Lentille polycarbonate traitée anti-jaunissement",
-    fits: "Projecteurs avec signature lumineuse",
-  },
-  "feux-arriere": {
-    badge: "SIGNATURE LED RUBIS",
-    highlight: "Boîtier étanche IP67 et lentille fumée haute visibilité",
-    fits: "Blocs complets et signalisation",
-  },
-  "accessoires-carrosserie": {
-    badge: "FINITION CARBONE & SPORT",
-    highlight: "Ajustement direct sur points d'ancrage d'origine",
-    fits: "Rétroviseurs, calandres, spoilers",
-  },
-};
-
-const protocolSteps = [
-  {
-    step: "01",
-    title: "Diagnostic & Dépose sécurisée",
-    desc: "Examen minutieux des points d'ancrage, dépose méticuleuse de l'élément endommagé sans altérer le châssis ni les faisceaux électriques.",
-  },
-  {
-    step: "02",
-    title: "Calage & Géométrie millimétrée",
-    desc: "Ajustement millimétré des jeux d'interstices de carrosserie, alignement rigoureux des boucliers, optiques et vitrages avec les lignes d'origine du constructeur.",
-  },
-  {
-    step: "03",
-    title: "Contrôle d'étanchéité & Réglage faisceaux",
-    desc: "Application de cordons d'étanchéité polymère haute résistance pour les pare-brise, et calibrage de la hauteur des projecteurs avant pour une visibilité nocturne optimale.",
-  },
-];
 
 export function HomePage() {
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
-  const [quickCategory, setQuickCategory] = useState("Pare-brise / Vitrage");
-  const [quickVehicle, setQuickVehicle] = useState("");
-
-  const filteredProducts =
-    selectedCategory === "all"
-      ? productCategories
-      : productCategories.filter((item) => item.slug === selectedCategory);
-
-  const handleQuickSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    const vehicleText = quickVehicle.trim() || "Véhicule à préciser";
-    const msg = `Bonjour LUXURY AUTO PARTS INTERNATIONAL,\nJe recherche la pièce suivante : *${quickCategory}*\nPour mon véhicule : *${vehicleText}*.\n\nPouvez-vous me confirmer la disponibilité et le tarif ? Merci.`;
-    window.open(whatsappUrl(msg), "_blank", "noopener,noreferrer");
-  };
-
   return (
     <>
       <Seo
-        title={`${company.legalName} — Pièces de carrosserie & pose automobile`}
-        description="Spécialiste à Ouagadougou en pièces de carrosserie : pare-brise, vitres, pare-chocs, phares LED, feux arrière et prestations de pose en atelier. La qualité au service de votre véhicule."
+        title={`${company.legalName} — Fourniture de pièces de carrosserie et pose`}
+        description="Votre partenaire pour la fourniture de pièces de carrosserie automobile et leur installation professionnelle à Ouagadougou. Vitres, pare-brise, pare-chocs, phares et feux."
         path="/"
       />
 
-      {/* 1. HERO SECTION ASYMÉTRIQUE & CONFIGURATEUR EXPRESS */}
-      <section className="relative overflow-hidden border-b hairline bg-carbon tech-grid">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-20">
-          <div className="grid grid-cols-1 items-stretch gap-10 lg:grid-cols-12 lg:gap-12">
-            
-            {/* Colonne Gauche : Titre tranchant & Recherche de disponibilité (7 cols) */}
-            <div className="flex flex-col justify-between lg:col-span-7">
-              <div>
-                <div className="inline-flex items-center gap-2.5 border hairline-border-strong bg-steel/90 px-3.5 py-1.5">
-                  <span className="h-2 w-2 rounded-full bg-crimson animate-pulse" />
-                  <span className="font-mono text-xs uppercase tracking-widest text-silver">
-                    Carrosserie • Vitrage • Éclairage Automobile
-                  </span>
-                </div>
-
-                <h1 className="mt-6 font-display text-4xl font-bold uppercase leading-[0.94] tracking-tight text-ivory sm:text-6xl lg:text-[68px]">
-                  Pièces de carrosserie <br className="hidden sm:inline" />
-                  <span className="text-silver">d’origine & adaptables.</span><br />
-                  <span className="text-crimson">Pose de précision.</span>
-                </h1>
-
-                <p className="mt-6 max-w-2xl text-base leading-relaxed text-silver sm:text-lg">
-                  Fourniture et installation soignée à Ouagadougou de{" "}
-                  <strong className="font-medium text-ivory">vitres et pare-brise, pare-chocs avant et arrière, blocs optiques LED, feux arrière</strong> et accessoires extérieurs pour berlines, 4x4 et utilitaires.
-                </p>
-              </div>
-
-              {/* Module de Recherche Express de Pièce (WhatsApp direct) */}
-              <div className="corner-tick mt-10 border hairline-border-strong bg-steel p-6 sm:p-7 glow-crimson">
-                <div className="flex flex-wrap items-center justify-between gap-2 border-b hairline pb-3">
-                  <span className="font-mono text-xs uppercase tracking-wider text-silver">
-                    Recherche express de disponibilité
-                  </span>
-                  <span className="font-mono text-[11px] font-semibold tracking-wider text-crimson">
-                    RÉPONSE DIRECTE ATELIER
-                  </span>
-                </div>
-
-                <form onSubmit={handleQuickSearch} className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-12">
-                  <div className="sm:col-span-5">
-                    <label htmlFor="quickCat" className="sr-only">Famille de pièce</label>
-                    <select
-                      id="quickCat"
-                      value={quickCategory}
-                      onChange={(e) => setQuickCategory(e.target.value)}
-                      className="w-full border hairline-border-strong bg-carbon px-3.5 py-3 text-sm text-ivory focus:border-crimson focus:outline-none"
-                    >
-                      <option value="Pare-brise / Vitrage">Vitres & Pare-brise</option>
-                      <option value="Pare-chocs avant / arrière">Pare-chocs Av / Ar</option>
-                      <option value="Phare avant LED / Xénon">Phares avant</option>
-                      <option value="Feu arrière">Feux arrière</option>
-                      <option value="Accessoire de carrosserie">Accessoires carrosserie</option>
-                    </select>
-                  </div>
-                  <div className="sm:col-span-4">
-                    <label htmlFor="quickVeh" className="sr-only">Modèle et année</label>
-                    <input
-                      id="quickVeh"
-                      type="text"
-                      placeholder="Ex: Toyota Prado 2020..."
-                      value={quickVehicle}
-                      onChange={(e) => setQuickVehicle(e.target.value)}
-                      className="w-full border hairline-border-strong bg-carbon px-3.5 py-3 text-sm text-ivory placeholder-silver-dim focus:border-crimson focus:outline-none"
-                    />
-                  </div>
-                  <div className="sm:col-span-3">
-                    <button
-                      type="submit"
-                      className="flex h-full w-full items-center justify-center gap-2 bg-crimson px-4 py-3 font-display text-sm font-bold uppercase tracking-wider text-white transition-colors hover:bg-crimson-hover"
-                    >
-                      <MessageCircle className="h-4 w-4" />
-                      Demander
-                    </button>
-                  </div>
-                </form>
-
-                <p className="mt-3 font-mono text-[11px] text-silver-dim">
-                  Orientation précise selon marque, modèle et année • Contrôle de compatibilité avant montage.
-                </p>
-              </div>
+      {/* B. Hero section */}
+      <section className="relative bg-dark-surface text-dark-on-surface overflow-hidden">
+        <div className="max-w-7xl mx-auto px-5 md:px-8 py-12 md:py-20 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div className="lg:col-span-6 flex flex-col gap-6 z-10">
+            <p className="font-label text-xs uppercase tracking-widest text-argent-metallique font-semibold">
+              La qualité au service de votre véhicule.
+            </p>
+            <h1 className="font-display text-4xl sm:text-5xl lg:text-[52px] font-semibold leading-[1.1] text-dark-on-surface text-balance">
+              L'excellence automobile, jusque dans les moindres détails.
+            </h1>
+            <p className="font-body text-base md:text-lg text-dark-on-surface-variant text-pretty max-w-prose leading-relaxed">
+              Votre partenaire pour la fourniture de pièces de carrosserie et leur installation professionnelle.
+            </p>
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
+              <Link
+                to="/produits"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded border border-argent-metallique text-dark-on-surface font-label text-sm font-semibold transition-colors duration-150 hover:bg-dark-surface-container"
+              >
+                <span>Découvrir nos pièces</span>
+              </Link>
+              <Link
+                to="/contact#devis"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded bg-light-primary text-light-on-primary font-label text-sm font-semibold transition-colors duration-150 hover:bg-dark-surface-container"
+              >
+                <span>Demander un devis</span>
+                <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
+                  arrow_forward
+                </span>
+              </Link>
             </div>
+          </div>
 
-            {/* Colonne Droite : Vitrine Visuelle Technique (5 cols) */}
-            <div className="flex flex-col lg:col-span-5">
-              <div className="relative min-h-[380px] flex-1 overflow-hidden border hairline-border-strong bg-steel sm:min-h-[460px]">
-                <img
-                  src="/images/intro.jpg"
-                  alt="Carrosserie automobile et optiques de précision"
-                  className="h-full w-full object-cover object-center transition-transform duration-700 hover:scale-[1.02]"
-                  fetchPriority="high"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-carbon via-carbon/20 to-transparent" />
-
-                {/* Repères techniques superposés façon schéma d'ingénierie */}
-                <div className="absolute left-4 right-4 top-4 flex items-start justify-between font-mono text-[11px]">
-                  <span className="border hairline bg-carbon/90 px-3 py-1 text-silver backdrop-blur-sm">
-                    SPEC // ORIGINE & ADAPTABLE
-                  </span>
-                  <span className="bg-crimson px-3 py-1 font-semibold text-white">
-                    POSE EN ATELIER
-                  </span>
-                </div>
-
-                {/* Cartouche d'informations bas de vitrine */}
-                <div className="absolute inset-x-0 bottom-0 border-t hairline bg-carbon/95 p-5 backdrop-blur-md">
-                  <div className="grid grid-cols-3 gap-3 text-left">
-                    <div>
-                      <div className="font-mono text-[10px] uppercase text-silver-dim">Vitrage</div>
-                      <div className="mt-0.5 font-display text-sm font-semibold uppercase text-ivory sm:text-base">
-                        Pare-brise
-                      </div>
-                    </div>
-                    <div className="border-l hairline pl-3">
-                      <div className="font-mono text-[10px] uppercase text-silver-dim">Protection</div>
-                      <div className="mt-0.5 font-display text-sm font-semibold uppercase text-ivory sm:text-base">
-                        Pare-chocs
-                      </div>
-                    </div>
-                    <div className="border-l hairline pl-3">
-                      <div className="font-mono text-[10px] uppercase text-silver-dim">Optiques</div>
-                      <div className="mt-0.5 font-display text-sm font-semibold uppercase text-ivory sm:text-base">
-                        Phares LED
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <div className="lg:col-span-6">
+            <div className="relative rounded-lg overflow-hidden border border-dark-outline-variant bg-dark-surface-container-low shadow-xl">
+              <img
+                src="/images/hero.jpg"
+                alt="Véhicule automobile haut de gamme mettant en valeur les phares, le pare-chocs avant et le pare-brise"
+                className="w-full aspect-[16/10] object-cover"
+                fetchPriority="high"
+              />
             </div>
-
           </div>
         </div>
       </section>
 
-      {/* 2. CATALOGUE DYNAMIQUE PAR FAMILLES DE PIÈCES */}
-      <section id="catalogue" className="border-b hairline bg-carbon py-16 lg:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          
-          <div className="flex flex-col justify-between gap-6 border-b hairline pb-8 md:flex-row md:items-end">
-            <div>
-              <span className="mb-2 block font-mono text-xs uppercase tracking-widest text-crimson">
-                01 / INVENTAIRE & PIÈCES DE CARROSSERIE
-              </span>
-              <h2 className="font-display text-3xl font-bold uppercase tracking-tight text-ivory sm:text-5xl">
-                Catalogue Pièces de Carrosserie
-              </h2>
-            </div>
-            <p className="max-w-md text-sm leading-relaxed text-silver">
-              Filtrez par famille ou sélectionnez la pièce recherchée. Chaque pièce est inspectée avant remise ou pose dans notre atelier.
+      {/* C. Section de présentation (Deux pôles complémentaires) */}
+      <section className="bg-light-surface py-16 md:py-24 border-b border-light-outline-variant">
+        <div className="max-w-7xl mx-auto px-5 md:px-8 flex flex-col gap-8">
+          <div className="max-w-3xl flex flex-col gap-2">
+            <span className="font-label text-xs uppercase tracking-widest text-light-primary font-semibold">
+              Fourniture & Installation
+            </span>
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-[40px] font-semibold text-light-on-surface leading-tight text-balance">
+              Bien plus que des pièces automobiles. Une solution complète.
+            </h2>
+            <p className="font-body text-base text-light-on-surface-variant text-pretty leading-relaxed">
+              Vous pouvez commander une pièce de carrosserie seule ou opter pour un accompagnement complet incluant la fourniture et l'intervention technique sur votre véhicule.
             </p>
           </div>
 
-          {/* Onglets de filtrage interactifs */}
-          <div className="mt-8 flex items-center gap-2 overflow-x-auto pb-2">
-            <button
-              type="button"
-              onClick={() => setSelectedCategory("all")}
-              className={`whitespace-nowrap px-4 py-2.5 font-mono text-xs uppercase tracking-wider transition-colors ${
-                selectedCategory === "all"
-                  ? "border border-crimson bg-crimson text-white"
-                  : "border hairline bg-steel text-silver hover:border-silver/30 hover:text-white"
-              }`}
-            >
-              Tout le catalogue
-            </button>
-            {productCategories.map((cat) => (
-              <button
-                key={cat.slug}
-                type="button"
-                onClick={() => setSelectedCategory(cat.slug)}
-                className={`whitespace-nowrap px-4 py-2.5 font-mono text-xs uppercase tracking-wider transition-colors ${
-                  selectedCategory === cat.slug
-                    ? "border border-crimson bg-crimson text-white"
-                    : "border hairline bg-steel text-silver hover:border-silver/30 hover:text-white"
-                }`}
-              >
-                {cat.shortTitle}
-              </button>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch mt-4">
+            {/* Bloc 1 : Fourniture */}
+            <article className="flex flex-col h-full bg-light-surface-container-low border border-light-outline-variant rounded-lg overflow-hidden transition-all duration-150 hover:border-argent-metallique shadow-sm">
+              <div className="aspect-[4/3] w-full overflow-hidden bg-noir-profond">
+                <img
+                  src="/images/intro.jpg"
+                  alt="Pièces de carrosserie automobile sélectionnées et préparées pour la fourniture"
+                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-[1.02]"
+                  loading="lazy"
+                />
+              </div>
+              <div className="p-6 md:p-8 flex flex-col flex-1 gap-4">
+                <h3 className="font-headline text-2xl font-semibold text-light-on-surface">
+                  Fourniture de pièces de carrosserie
+                </h3>
+                <p className="font-body text-sm text-light-on-surface-variant text-pretty flex-1 leading-relaxed">
+                  Pare-brise, vitres, pare-chocs avant et arrière, phares avant, feux arrière et accessoires de carrosserie adaptés à votre véhicule.
+                </p>
+                <div>
+                  <Link
+                    to="/produits"
+                    className="inline-flex items-center gap-2 font-label text-sm font-semibold text-light-primary hover:text-noir-profond transition-colors duration-150"
+                  >
+                    <span>Explorer nos catégories</span>
+                    <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
+                      arrow_forward
+                    </span>
+                  </Link>
+                </div>
+              </div>
+            </article>
+
+            {/* Bloc 2 : Prestations techniques */}
+            <article className="flex flex-col h-full bg-light-surface-container-low border border-light-outline-variant rounded-lg overflow-hidden transition-all duration-150 hover:border-argent-metallique shadow-sm">
+              <div className="aspect-[4/3] w-full overflow-hidden bg-noir-profond">
+                <img
+                  src="/images/service-pose.jpg"
+                  alt="Technicien effectuant l'installation précise d'une pièce automobile"
+                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-[1.02]"
+                  loading="lazy"
+                />
+              </div>
+              <div className="p-6 md:p-8 flex flex-col flex-1 gap-4">
+                <h3 className="font-headline text-2xl font-semibold text-light-on-surface">
+                  Pose, remplacement et installation
+                </h3>
+                <p className="font-body text-sm text-light-on-surface-variant text-pretty flex-1 leading-relaxed">
+                  Intervention technique soignée pour la pose de pare-brise et vitres, le remplacement de composants endommagés et l'installation d'éléments de carrosserie.
+                </p>
+                <div>
+                  <Link
+                    to="/services"
+                    className="inline-flex items-center gap-2 font-label text-sm font-semibold text-light-primary hover:text-noir-profond transition-colors duration-150"
+                  >
+                    <span>Découvrir nos prestations</span>
+                    <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
+                      arrow_forward
+                    </span>
+                  </Link>
+                </div>
+              </div>
+            </article>
           </div>
+        </div>
+      </section>
 
-          {/* Grille des pièces de carrosserie */}
-          <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {filteredProducts.map((item: ProductCategory) => {
-              const spec = pieceSpecs[item.slug];
-              const waItemMsg = `Bonjour LUXURY AUTO PARTS INTERNATIONAL, je souhaite vérifier la disponibilité et le tarif pour : *${item.title}*.`;
-
-              return (
-                <article
-                  key={item.slug}
-                  className="group flex flex-col justify-between border hairline-border-strong bg-steel transition-all duration-300 hover:border-crimson"
-                >
-                  <div>
-                    {/* Image studio HD */}
-                    <div className="relative aspect-[16/10] overflow-hidden bg-carbon">
-                      <img
-                        src={item.image}
-                        alt={item.imageAlt}
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                        loading="lazy"
-                      />
-                      {spec ? (
-                        <div className="absolute bottom-2 left-2 right-2 flex justify-between">
-                          <span className="bg-carbon/90 px-2 py-1 font-mono text-[10px] tracking-wider text-silver backdrop-blur-sm">
-                            {spec.badge}
-                          </span>
-                        </div>
-                      ) : null}
-                    </div>
-
-                    {/* Contenu technique */}
-                    <div className="p-6">
-                      <div className="font-mono text-[11px] uppercase tracking-wider text-crimson">
-                        FAMILLE CARROSSERIE
-                      </div>
-                      <h3 className="mt-1.5 font-display text-2xl font-bold uppercase tracking-wide text-ivory">
-                        {item.title}
-                      </h3>
-                      <p className="mt-3 text-sm leading-relaxed text-silver">
-                        {item.excerpt}
-                      </p>
-
-                      {/* Points clés d'équipement */}
-                      <ul className="mt-5 space-y-2 border-t hairline pt-4 text-xs text-silver">
-                        {item.details.slice(0, 3).map((detail) => (
-                          <li key={detail} className="flex items-center gap-2">
-                            <span className="h-1.5 w-1.5 bg-crimson" />
-                            <span>{detail}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-
-                  {/* Actions de la carte */}
-                  <div className="border-t hairline bg-carbon/60 p-4">
-                    <div className="flex items-center gap-2">
-                      <a
-                        href={whatsappUrl(waItemMsg)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 bg-crimson py-2.5 text-center font-display text-xs font-bold uppercase tracking-wider text-white transition-colors hover:bg-crimson-hover"
-                      >
-                        Demander sur WhatsApp
-                      </a>
-                      <Link
-                        to={`/produits/${item.slug}`}
-                        className="border hairline p-2.5 text-silver transition-colors hover:border-ivory hover:text-white"
-                        title="Voir la fiche détaillée"
-                      >
-                        <ChevronRight className="h-4 w-4" />
-                      </Link>
-                    </div>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-
-          <div className="mt-12 flex justify-center">
+      {/* D. Section catégories de pièces */}
+      <section className="bg-light-surface-container-low py-16 md:py-24 border-b border-light-outline-variant">
+        <div className="max-w-7xl mx-auto px-5 md:px-8 flex flex-col gap-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div className="flex flex-col gap-2 max-w-2xl">
+              <span className="font-label text-xs uppercase tracking-widest text-light-primary font-semibold">
+                Catalogue
+              </span>
+              <h2 className="font-display text-3xl sm:text-4xl lg:text-[40px] font-semibold text-light-on-surface">
+                Nos pièces de carrosserie
+              </h2>
+            </div>
             <Link
               to="/produits"
-              className="inline-flex items-center gap-2 border hairline px-6 py-3 font-display text-sm font-semibold uppercase tracking-[0.16em] text-silver transition-colors hover:border-ivory hover:text-white"
+              className="inline-flex items-center gap-2 font-label text-sm font-semibold text-light-on-surface hover:text-light-primary transition-colors duration-150"
             >
-              Consulter l'ensemble de notre gamme <ArrowRight className="h-4 w-4" />
+              <span>Voir toutes les pièces</span>
+              <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
+                arrow_forward
+              </span>
             </Link>
           </div>
 
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch mt-4">
+            {/* Catégorie 1 : Pare-brise et vitres */}
+            <article className="flex flex-col h-full bg-light-surface border border-light-outline-variant rounded-lg overflow-hidden transition-all duration-150 hover:border-argent-metallique shadow-sm">
+              <div className="aspect-[4/3] w-full bg-noir-profond overflow-hidden">
+                <img
+                  src="/images/vitres-pare-brise.jpg"
+                  alt="Pare-brise et vitres automobiles"
+                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-[1.02]"
+                  loading="lazy"
+                />
+              </div>
+              <div className="p-6 flex flex-col flex-1 gap-3">
+                <h3 className="font-title text-xl font-semibold text-light-on-surface">
+                  Pare-brise et vitres
+                </h3>
+                <p className="font-body text-sm text-light-on-surface-variant text-pretty flex-1 leading-relaxed">
+                  Pare-brise avant, lunettes arrière et vitres latérales disponibles à la fourniture seule ou avec pose.
+                </p>
+                <footer className="pt-4 border-t border-light-outline-variant mt-2">
+                  <Link
+                    to="/produits/vitres-et-pare-brise"
+                    className="inline-flex items-center gap-2 font-label text-sm font-semibold text-light-primary hover:text-noir-profond transition-colors duration-150"
+                  >
+                    <span>Demander des informations</span>
+                    <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
+                      arrow_forward
+                    </span>
+                  </Link>
+                </footer>
+              </div>
+            </article>
+
+            {/* Catégorie 2 : Pare-chocs */}
+            <article className="flex flex-col h-full bg-light-surface border border-light-outline-variant rounded-lg overflow-hidden transition-all duration-150 hover:border-argent-metallique shadow-sm">
+              <div className="aspect-[4/3] w-full bg-noir-profond overflow-hidden">
+                <img
+                  src="/images/pare-chocs.jpg"
+                  alt="Pare-chocs avant et arrière"
+                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-[1.02]"
+                  loading="lazy"
+                />
+              </div>
+              <div className="p-6 flex flex-col flex-1 gap-3">
+                <h3 className="font-title text-xl font-semibold text-light-on-surface">
+                  Pare-chocs
+                </h3>
+                <p className="font-body text-sm text-light-on-surface-variant text-pretty flex-1 leading-relaxed">
+                  Pare-chocs avant et arrière respectant les lignes et fixations d'origine de votre carrosserie.
+                </p>
+                <footer className="pt-4 border-t border-light-outline-variant mt-2">
+                  <Link
+                    to="/produits/pare-chocs"
+                    className="inline-flex items-center gap-2 font-label text-sm font-semibold text-light-primary hover:text-noir-profond transition-colors duration-150"
+                  >
+                    <span>Demander des informations</span>
+                    <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
+                      arrow_forward
+                    </span>
+                  </Link>
+                </footer>
+              </div>
+            </article>
+
+            {/* Catégorie 3 : Phares avant */}
+            <article className="flex flex-col h-full bg-light-surface border border-light-outline-variant rounded-lg overflow-hidden transition-all duration-150 hover:border-argent-metallique shadow-sm">
+              <div className="aspect-[4/3] w-full bg-noir-profond overflow-hidden">
+                <img
+                  src="/images/phares-avant.jpg"
+                  alt="Phares avant automobiles"
+                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-[1.02]"
+                  loading="lazy"
+                />
+              </div>
+              <div className="p-6 flex flex-col flex-1 gap-3">
+                <h3 className="font-title text-xl font-semibold text-light-on-surface">
+                  Phares avant
+                </h3>
+                <p className="font-body text-sm text-light-on-surface-variant text-pretty flex-1 leading-relaxed">
+                  Blocs optiques avant pour restituer la visibilité nocturne et la signature lumineuse du véhicule.
+                </p>
+                <footer className="pt-4 border-t border-light-outline-variant mt-2">
+                  <Link
+                    to="/produits/phares-avant"
+                    className="inline-flex items-center gap-2 font-label text-sm font-semibold text-light-primary hover:text-noir-profond transition-colors duration-150"
+                  >
+                    <span>Demander des informations</span>
+                    <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
+                      arrow_forward
+                    </span>
+                  </Link>
+                </footer>
+              </div>
+            </article>
+
+            {/* Catégorie 4 : Feux arrière */}
+            <article className="flex flex-col h-full bg-light-surface border border-light-outline-variant rounded-lg overflow-hidden transition-all duration-150 hover:border-argent-metallique shadow-sm">
+              <div className="aspect-[4/3] w-full bg-noir-profond overflow-hidden">
+                <img
+                  src="/images/feux-arriere.jpg"
+                  alt="Feux arrière automobiles"
+                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-[1.02]"
+                  loading="lazy"
+                />
+              </div>
+              <div className="p-6 flex flex-col flex-1 gap-3">
+                <h3 className="font-title text-xl font-semibold text-light-on-surface">
+                  Feux arrière
+                </h3>
+                <p className="font-body text-sm text-light-on-surface-variant text-pretty flex-1 leading-relaxed">
+                  Feux arrière gauche, droit et ensembles de signalisation adaptés à l'année et au modèle.
+                </p>
+                <footer className="pt-4 border-t border-light-outline-variant mt-2">
+                  <Link
+                    to="/produits/feux-arriere"
+                    className="inline-flex items-center gap-2 font-label text-sm font-semibold text-light-primary hover:text-noir-profond transition-colors duration-150"
+                  >
+                    <span>Demander des informations</span>
+                    <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
+                      arrow_forward
+                    </span>
+                  </Link>
+                </footer>
+              </div>
+            </article>
+
+            {/* Catégorie 5 : Accessoires de carrosserie */}
+            <article className="flex flex-col h-full bg-light-surface border border-light-outline-variant rounded-lg overflow-hidden md:col-span-2 lg:col-span-2 transition-all duration-150 hover:border-argent-metallique shadow-sm">
+              <div className="grid grid-cols-1 md:grid-cols-2 h-full">
+                <div className="aspect-[4/3] md:aspect-auto w-full h-full bg-noir-profond overflow-hidden">
+                  <img
+                    src="/images/accessoires-carrosserie.jpg"
+                    alt="Accessoires et composants de carrosserie"
+                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-[1.02]"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="p-6 md:p-8 flex flex-col justify-between gap-4">
+                  <div className="flex flex-col gap-2">
+                    <h3 className="font-title text-xl font-semibold text-light-on-surface">
+                      Accessoires de carrosserie
+                    </h3>
+                    <p className="font-body text-sm text-light-on-surface-variant text-pretty leading-relaxed">
+                      Rétroviseurs, grilles de calandre, moulures et autres composants extérieurs pour compléter ou restaurer l'esthétique de votre véhicule.
+                    </p>
+                  </div>
+                  <footer className="pt-4 border-t border-light-outline-variant">
+                    <Link
+                      to="/produits/accessoires-carrosserie"
+                      className="inline-flex items-center gap-2 font-label text-sm font-semibold text-light-primary hover:text-noir-profond transition-colors duration-150"
+                    >
+                      <span>Demander des informations</span>
+                      <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
+                        arrow_forward
+                      </span>
+                    </Link>
+                  </footer>
+                </div>
+              </div>
+            </article>
+          </div>
         </div>
       </section>
 
-      {/* 3. PROTOCOLE D'ATELIER & POSE DE PRÉCISION */}
-      <section className="relative overflow-hidden border-b hairline bg-carbon-soft py-16 lg:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          
-          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
-            
-            {/* Colonne gauche : Photo officielle technicien (5 cols) */}
-            <div className="lg:col-span-5">
-              <div className="corner-tick relative overflow-hidden border hairline-border-strong bg-steel">
-                <img
-                  src="/images/service-pose.jpg"
-                  alt="Technicien carrossier professionnel en intervention"
-                  className="aspect-[4/5] w-full object-cover"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-carbon via-transparent to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <span className="font-mono text-xs uppercase tracking-widest text-crimson">
-                    ATELIER QUALIFIÉ
-                  </span>
-                  <p className="mt-1 font-display text-xl uppercase text-ivory">
-                    Intervention soignée & ajustement garanti
+      {/* E. Section prestations */}
+      <section className="bg-light-surface py-16 md:py-24 border-b border-light-outline-variant">
+        <div className="max-w-7xl mx-auto px-5 md:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <div className="lg:col-span-6">
+            <div className="rounded-lg overflow-hidden border border-light-outline-variant bg-noir-profond shadow-md">
+              <img
+                src="/images/service-remplacement.jpg"
+                alt="Intervention technique de pose et remplacement de carrosserie"
+                className="w-full aspect-[4/3] object-cover"
+                loading="lazy"
+              />
+            </div>
+          </div>
+          <div className="lg:col-span-6 flex flex-col gap-6">
+            <div className="flex flex-col gap-2">
+              <span className="font-label text-xs uppercase tracking-widest text-light-primary font-semibold">
+                Prestations techniques
+              </span>
+              <h2 className="font-display text-3xl sm:text-4xl lg:text-[40px] font-semibold text-light-on-surface leading-tight text-balance">
+                La précision dans chaque intervention.
+              </h2>
+            </div>
+
+            <div className="flex flex-col divide-y divide-light-outline-variant border-y border-light-outline-variant">
+              <div className="py-4 flex items-start gap-4">
+                <span className="material-symbols-outlined text-[24px] text-light-primary mt-0.5 shrink-0" aria-hidden="true">
+                  build
+                </span>
+                <div className="flex flex-col gap-1">
+                  <h3 className="font-body text-base font-semibold text-light-on-surface">
+                    Installation de pare-brise et de vitres
+                  </h3>
+                  <p className="font-body text-sm text-light-on-surface-variant text-pretty leading-relaxed">
+                    Pose soignée garantissant étanchéité, alignement et sécurité de conduite.
                   </p>
-                  <p className="mt-1 text-xs text-silver">
-                    Chaque composant posé respecte les cotes et tolérances constructeur.
+                </div>
+              </div>
+              <div className="py-4 flex items-start gap-4">
+                <span className="material-symbols-outlined text-[24px] text-light-primary mt-0.5 shrink-0" aria-hidden="true">
+                  autorenew
+                </span>
+                <div className="flex flex-col gap-1">
+                  <h3 className="font-body text-base font-semibold text-light-on-surface">
+                    Remplacement de composants endommagés
+                  </h3>
+                  <p className="font-body text-sm text-light-on-surface-variant text-pretty leading-relaxed">
+                    Dépose propre et remplacement des optiques, pare-chocs ou vitrages fissurés.
+                  </p>
+                </div>
+              </div>
+              <div className="py-4 flex items-start gap-4">
+                <span className="material-symbols-outlined text-[24px] text-light-primary mt-0.5 shrink-0" aria-hidden="true">
+                  precision_manufacturing
+                </span>
+                <div className="flex flex-col gap-1">
+                  <h3 className="font-body text-base font-semibold text-light-on-surface">
+                    Pose de composants de carrosserie
+                  </h3>
+                  <p className="font-body text-sm text-light-on-surface-variant text-pretty leading-relaxed">
+                    Montage et ajustement précis des pièces fournies directement sur votre véhicule.
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Colonne droite : Les 3 étapes du protocole (7 cols) */}
-            <div className="lg:col-span-7">
-              <span className="font-mono text-xs uppercase tracking-widest text-crimson">
-                02 / PROTOCOLE D'ATELIER
-              </span>
-              <h2 className="mt-2 font-display text-3xl font-bold uppercase tracking-tight text-ivory sm:text-5xl">
-                Pose, remplacement & installation professionnelle
-              </h2>
-              <p className="mt-5 text-base leading-relaxed text-silver">
-                Nous ne nous contentons pas de vendre des pièces : notre équipe assure l'ensemble du suivi technique sur votre véhicule.
-              </p>
-
-              <div className="mt-10 space-y-6">
-                {protocolSteps.map((step) => (
-                  <div
-                    key={step.step}
-                    className="flex gap-5 border-l-2 border-crimson bg-steel/60 p-5 transition-colors hover:bg-steel"
-                  >
-                    <span className="font-mono text-2xl font-bold text-crimson">
-                      {step.step}
-                    </span>
-                    <div>
-                      <h3 className="font-display text-xl font-semibold uppercase text-ivory">
-                        {step.title}
-                      </h3>
-                      <p className="mt-2 text-sm leading-relaxed text-silver">
-                        {step.desc}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-8 flex flex-wrap gap-4">
-                <Link
-                  to="/services"
-                  className="bg-crimson px-6 py-3 font-display text-sm font-semibold uppercase tracking-wider text-white transition-colors hover:bg-crimson-hover"
-                >
-                  Découvrir tous les services atelier
-                </Link>
-                <a
-                  href={company.phone.href}
-                  className="inline-flex items-center gap-2 border hairline px-5 py-3 font-mono text-xs uppercase tracking-wider text-silver transition-colors hover:border-ivory hover:text-white"
-                >
-                  <Phone className="h-4 w-4" />
-                  Prendre rendez-vous atelier
-                </a>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-
-      {/* 4. ENGAGEMENTS & RIGUEUR DE MÉTHODE */}
-      <section className="border-b hairline bg-carbon py-16 lg:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          
-          <div className="text-center">
-            <span className="font-mono text-xs uppercase tracking-widest text-crimson">
-              03 / NOS ENGAGEMENTS
-            </span>
-            <h2 className="mt-2 font-display text-3xl font-bold uppercase tracking-tight text-ivory sm:text-4xl">
-              Pourquoi confier votre carrosserie à {company.name}
-            </h2>
-            <p className="mx-auto mt-4 max-w-xl text-sm text-silver">
-              Des principes clairs, sans fioritures marketing, centrés sur la sécurité et le rendu de votre véhicule.
-            </p>
-          </div>
-
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="border hairline bg-steel p-6">
-              <ShieldCheck className="h-8 w-8 text-crimson" />
-              <h3 className="mt-4 font-display text-lg font-semibold uppercase text-ivory">
-                Conformité des pièces
-              </h3>
-              <p className="mt-2 text-xs leading-relaxed text-silver">
-                Matériaux rigoureusement sélectionnés pour respecter les points de fixation et la sécurité passive.
-              </p>
-            </div>
-            <div className="border hairline bg-steel p-6">
-              <Eye className="h-8 w-8 text-crimson" />
-              <h3 className="mt-4 font-display text-lg font-semibold uppercase text-ivory">
-                Clarté & Optiques LED
-              </h3>
-              <p className="mt-2 text-xs leading-relaxed text-silver">
-                Blocs optiques et feux certifiés garantissant faisceau net, étanchéité et transparence durable.
-              </p>
-            </div>
-            <div className="border hairline bg-steel p-6">
-              <Wrench className="h-8 w-8 text-crimson" />
-              <h3 className="mt-4 font-display text-lg font-semibold uppercase text-ivory">
-                Savoir-faire Atelier
-              </h3>
-              <p className="mt-2 text-xs leading-relaxed text-silver">
-                Pose et calage réalisés par des techniciens carrossiers expérimentés et outillés.
-              </p>
-            </div>
-            <div className="border hairline bg-steel p-6">
-              <MessageCircle className="h-8 w-8 text-crimson" />
-              <h3 className="mt-4 font-display text-lg font-semibold uppercase text-ivory">
-                Ligne directe réactive
-              </h3>
-              <p className="mt-2 text-xs leading-relaxed text-silver">
-                Échange immédiat par téléphone ou WhatsApp avec réponse concrète sur le stock et les délais.
-              </p>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      {/* 5. BANDEAU D'INTERVENTION RAPIDE & CONTACT DIRECT */}
-      <section className="bg-steel py-16 lg:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="corner-tick border hairline-border-strong bg-carbon p-8 sm:p-12 lg:p-16">
-            <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12">
-              <div className="lg:col-span-8">
-                <span className="font-mono text-xs uppercase tracking-widest text-crimson">
-                  URGENCE BRIS DE GLACE OU CHOC CARROSSERIE ?
+            <div className="pt-2">
+              <Link
+                to="/services"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded bg-noir-profond text-dark-on-surface font-label text-sm font-semibold transition-colors duration-150 hover:bg-light-primary"
+              >
+                <span>Voir nos prestations</span>
+                <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
+                  arrow_forward
                 </span>
-                <h2 className="mt-3 font-display text-3xl font-bold uppercase leading-tight text-ivory sm:text-5xl">
-                  Contactez l’atelier directement.
-                </h2>
-                <p className="mt-4 text-base text-silver">
-                  Indiquez-nous la marque et le modèle de votre véhicule. Nous vous répondons immédiatement sur la disponibilité de la pièce et le créneau de pose.
-                </p>
-              </div>
-              <div className="flex flex-col gap-3.5 sm:flex-row lg:col-span-4 lg:flex-col">
-                <a
-                  href={company.phone.href}
-                  className="flex items-center justify-center gap-2.5 bg-crimson px-6 py-3.5 font-display text-base font-semibold uppercase tracking-wider text-white transition-colors hover:bg-crimson-hover"
-                >
-                  <Phone className="h-5 w-5" />
-                  Appeler : {company.phone.display}
-                </a>
-                <a
-                  href={whatsappUrl(inquiryMessage({}))}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2.5 border hairline px-6 py-3.5 font-display text-base font-semibold uppercase tracking-wider text-ivory transition-colors hover:border-ivory hover:text-white"
-                >
-                  <MessageCircle className="h-5 w-5 text-green-500" />
-                  WhatsApp : {company.whatsapp.display}
-                </a>
-              </div>
+              </Link>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* F. Section pourquoi nous choisir */}
+      <section className="bg-light-surface-container-low py-16 md:py-24 border-b border-light-outline-variant">
+        <div className="max-w-7xl mx-auto px-5 md:px-8 flex flex-col gap-8">
+          <div className="max-w-2xl flex flex-col gap-2">
+            <span className="font-label text-xs uppercase tracking-widest text-light-primary font-semibold">
+              Engagements
+            </span>
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-[40px] font-semibold text-light-on-surface">
+              Pourquoi choisir Luxury Auto Parts International
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch mt-4">
+            <div className="bg-light-surface border border-light-outline-variant rounded-lg p-6 flex flex-col gap-3 shadow-sm">
+              <span className="material-symbols-outlined text-[28px] text-light-primary" aria-hidden="true">
+                layers
+              </span>
+              <h3 className="font-title text-lg font-semibold text-light-on-surface">
+                Fourniture et installation
+              </h3>
+              <p className="font-body text-sm text-light-on-surface-variant text-pretty leading-relaxed">
+                Une offre combinée permettant d'obtenir la pièce adaptée et sa pose professionnelle au même endroit.
+              </p>
+            </div>
+            <div className="bg-light-surface border border-light-outline-variant rounded-lg p-6 flex flex-col gap-3 shadow-sm">
+              <span className="material-symbols-outlined text-[28px] text-light-primary" aria-hidden="true">
+                verified
+              </span>
+              <h3 className="font-title text-lg font-semibold text-light-on-surface">
+                Approche orientée qualité
+              </h3>
+              <p className="font-body text-sm text-light-on-surface-variant text-pretty leading-relaxed">
+                Une sélection rigoureuse des pièces de carrosserie et un soin constant apporté aux finitions.
+              </p>
+            </div>
+            <div className="bg-light-surface border border-light-outline-variant rounded-lg p-6 flex flex-col gap-3 shadow-sm">
+              <span className="material-symbols-outlined text-[28px] text-light-primary" aria-hidden="true">
+                search_check
+              </span>
+              <h3 className="font-title text-lg font-semibold text-light-on-surface">
+                Recherche accompagnée
+              </h3>
+              <p className="font-body text-sm text-light-on-surface-variant text-pretty leading-relaxed">
+                Nous vous aidons à identifier la référence exacte selon la marque, le modèle et l'année du véhicule.
+              </p>
+            </div>
+            <div className="bg-light-surface border border-light-outline-variant rounded-lg p-6 flex flex-col gap-3 shadow-sm">
+              <span className="material-symbols-outlined text-[28px] text-light-primary" aria-hidden="true">
+                support_agent
+              </span>
+              <h3 className="font-title text-lg font-semibold text-light-on-surface">
+                Interlocuteur direct
+              </h3>
+              <p className="font-body text-sm text-light-on-surface-variant text-pretty leading-relaxed">
+                Un contact rapide par téléphone ou WhatsApp pour étudier votre demande et préparer votre devis.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* G. Section processus */}
+      <section className="bg-light-surface py-16 md:py-24">
+        <div className="max-w-7xl mx-auto px-5 md:px-8 flex flex-col gap-8">
+          <div className="max-w-2xl flex flex-col gap-2">
+            <span className="font-label text-xs uppercase tracking-widest text-light-primary font-semibold">
+              Méthode de travail
+            </span>
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-[40px] font-semibold text-light-on-surface">
+              Votre besoin. Notre expertise.
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch mt-4">
+            <div className="border-t-2 border-noir-profond pt-6 flex flex-col gap-2">
+              <span className="font-mono text-sm font-semibold text-light-primary tabular-nums">Étape 1</span>
+              <h3 className="font-title text-lg font-semibold text-light-on-surface">Identification</h3>
+              <p className="font-body text-sm text-light-on-surface-variant text-pretty leading-relaxed">
+                Vous identifiez la pièce de carrosserie ou la prestation d'installation recherchée.
+              </p>
+            </div>
+            <div className="border-t-2 border-noir-profond pt-6 flex flex-col gap-2">
+              <span className="font-mono text-sm font-semibold text-light-primary tabular-nums">Étape 2</span>
+              <h3 className="font-title text-lg font-semibold text-light-on-surface">Transmission</h3>
+              <p className="font-body text-sm text-light-on-surface-variant text-pretty leading-relaxed">
+                Vous nous transmettez les informations sur votre véhicule (marque, modèle, année, photo).
+              </p>
+            </div>
+            <div className="border-t-2 border-noir-profond pt-6 flex flex-col gap-2">
+              <span className="font-mono text-sm font-semibold text-light-primary tabular-nums">Étape 3</span>
+              <h3 className="font-title text-lg font-semibold text-light-on-surface">Étude technique</h3>
+              <p className="font-body text-sm text-light-on-surface-variant text-pretty leading-relaxed">
+                Nous étudions votre demande pour vérifier la correspondance exacte et les modalités d'intervention.
+              </p>
+            </div>
+            <div className="border-t-2 border-rouge-profond pt-6 flex flex-col gap-2">
+              <span className="font-mono text-sm font-semibold text-light-primary tabular-nums">Étape 4</span>
+              <h3 className="font-title text-lg font-semibold text-light-on-surface">Proposition</h3>
+              <p className="font-body text-sm text-light-on-surface-variant text-pretty leading-relaxed">
+                Nous vous recontactons rapidement pour vous proposer une solution claire et personnalisée.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* H. Section contact / conversion */}
+      <section className="bg-dark-surface text-dark-on-surface py-16 md:py-24 border-t border-dark-outline-variant">
+        <div className="max-w-5xl mx-auto px-5 md:px-8 text-center flex flex-col items-center gap-6">
+          <span className="font-label text-xs uppercase tracking-widest text-argent-metallique font-semibold">
+            Contact direct
+          </span>
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-[40px] font-semibold text-dark-on-surface text-balance">
+            Votre véhicule mérite les bonnes pièces.
+          </h2>
+          <p className="font-body text-base md:text-lg text-dark-on-surface-variant text-pretty max-w-2xl leading-relaxed">
+            Besoin d'une pièce, d'un remplacement ou d'une installation ? Contactez-nous pour obtenir des informations ou demander un devis.
+          </p>
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 w-full sm:w-auto pt-2">
+            <Link
+              to="/contact#devis"
+              className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded bg-light-primary text-light-on-primary font-label text-sm font-semibold transition-colors duration-150 hover:bg-dark-surface-container"
+            >
+              <span>Demander un devis</span>
+            </Link>
+            <a
+              href={company.whatsapp.baseUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded border border-argent-metallique text-dark-on-surface font-label text-sm font-semibold transition-colors duration-150 hover:bg-dark-surface-container"
+            >
+              <span className="material-symbols-outlined text-[20px]" aria-hidden="true">
+                chat
+              </span>
+              <span>Nous contacter sur WhatsApp</span>
+            </a>
           </div>
         </div>
       </section>

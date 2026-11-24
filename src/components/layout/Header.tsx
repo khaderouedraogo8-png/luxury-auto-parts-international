@@ -1,19 +1,16 @@
-import { Menu, Phone, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { company } from "../../data/company";
-import { navLinks } from "../../data/navigation";
 
 export function Header() {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+  const [prevPath, setPrevPath] = useState(location.pathname);
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  if (prevPath !== location.pathname) {
+    setPrevPath(location.pathname);
+    setOpen(false);
+  }
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -23,113 +20,221 @@ export function Header() {
   }, [open]);
 
   return (
-    <header
-      className={`sticky top-0 z-50 border-b hairline transition-colors ${
-        scrolled ? "border-silver/20 bg-carbon/95 backdrop-blur-md" : "border-silver/10 bg-carbon/90 backdrop-blur-sm"
-      }`}
-    >
-      {/* Barre supérieure d'informations atelier (Desktop) */}
-      <div className="hidden border-b hairline bg-steel/70 px-4 py-1.5 font-mono text-[11px] text-silver sm:block sm:px-6 lg:px-8">
-        <div className="mx-auto flex max-w-7xl items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="uppercase tracking-wider">Atelier & Comptoir Ouagadougou • Devis & Disponibilité Express</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <span>Appel direct : <strong className="text-ivory">{company.phone.display}</strong></span>
-            <span className="text-silver/40">|</span>
-            <span>WhatsApp : <strong className="text-ivory">{company.whatsapp.display}</strong></span>
-          </div>
-        </div>
-      </div>
-
-      <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between gap-4 px-4 sm:h-20 sm:px-6 lg:px-8">
-        <Link to="/" className="flex min-w-0 items-center gap-3" onClick={() => setOpen(false)}>
+    <header className="sticky top-0 z-50 bg-dark-surface text-dark-on-surface border-b border-dark-outline-variant">
+      <div className="max-w-7xl mx-auto px-5 md:px-8 h-20 flex items-center justify-between gap-4">
+        {/* Logo & Emblem */}
+        <Link
+          to="/"
+          className="flex items-center gap-3 shrink-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-argent-metallique"
+        >
           <img
             src={company.logo.emblem}
             alt={company.legalName}
-            className="h-12 w-auto max-w-[220px] object-contain object-left sm:h-14 sm:max-w-[260px]"
-            width={260}
-            height={56}
+            className="h-10 w-auto object-contain"
+            width={44}
+            height={32}
           />
-          <span className="sr-only">{company.legalName}</span>
+          <div className="flex flex-col leading-none">
+            <span className="font-headline text-[17px] font-semibold tracking-wide text-dark-on-surface uppercase">
+              Luxury Auto Parts
+            </span>
+            <span className="font-label text-[11px] font-semibold tracking-[0.2em] text-argent-metallique uppercase">
+              International
+            </span>
+          </div>
         </Link>
 
-        <nav className="hidden items-center gap-7 lg:flex" aria-label="Navigation principale">
-          {navLinks.map((link) => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              className={({ isActive }) =>
-                `text-sm tracking-wide transition-colors ${
-                  isActive ? "text-ivory" : "text-silver hover:text-ivory"
-                }`
-              }
-              end={link.to === "/"}
-            >
-              {link.label}
-            </NavLink>
-          ))}
+        {/* Navigation Desktop */}
+        <nav aria-label="Navigation principale" className="hidden lg:flex items-center gap-8">
+          <NavLink
+            to="/"
+            end
+            className={({ isActive }) =>
+              `font-label text-sm font-semibold tracking-wide py-1 transition-colors duration-150 ${
+                isActive
+                  ? "text-dark-on-surface border-b-2 border-rouge-profond"
+                  : "text-argent-metallique hover:text-dark-on-surface"
+              }`
+            }
+          >
+            Accueil
+          </NavLink>
+          <NavLink
+            to="/produits"
+            className={({ isActive }) =>
+              `font-label text-sm font-semibold tracking-wide py-1 transition-colors duration-150 ${
+                isActive
+                  ? "text-dark-on-surface border-b-2 border-rouge-profond"
+                  : "text-argent-metallique hover:text-dark-on-surface"
+              }`
+            }
+          >
+            Nos pièces
+          </NavLink>
+          <NavLink
+            to="/services"
+            className={({ isActive }) =>
+              `font-label text-sm font-semibold tracking-wide py-1 transition-colors duration-150 ${
+                isActive
+                  ? "text-dark-on-surface border-b-2 border-rouge-profond"
+                  : "text-argent-metallique hover:text-dark-on-surface"
+              }`
+            }
+          >
+            Nos prestations
+          </NavLink>
+          <NavLink
+            to="/a-propos"
+            className={({ isActive }) =>
+              `font-label text-sm font-semibold tracking-wide py-1 transition-colors duration-150 ${
+                isActive
+                  ? "text-dark-on-surface border-b-2 border-rouge-profond"
+                  : "text-argent-metallique hover:text-dark-on-surface"
+              }`
+            }
+          >
+            À propos
+          </NavLink>
+          <NavLink
+            to="/contact"
+            className={({ isActive }) =>
+              `font-label text-sm font-semibold tracking-wide py-1 transition-colors duration-150 ${
+                isActive
+                  ? "text-dark-on-surface border-b-2 border-rouge-profond"
+                  : "text-argent-metallique hover:text-dark-on-surface"
+              }`
+            }
+          >
+            Contact
+          </NavLink>
         </nav>
 
-        <div className="flex items-center gap-2">
-          <a
-            href={company.phone.href}
-            className="hidden items-center gap-2 border border-silver/20 px-3 py-2 text-sm text-silver transition-colors hover:border-ivory hover:text-ivory md:inline-flex"
-          >
-            <Phone className="h-4 w-4" aria-hidden="true" />
-            {company.phone.display}
-          </a>
+        {/* Action Button & Mobile Toggle */}
+        <div className="flex items-center gap-3">
           <Link
-            to="/contact"
-            className="hidden bg-crimson px-4 py-2.5 font-display text-sm font-semibold uppercase tracking-[0.14em] text-white transition-colors hover:bg-crimson-hover sm:inline-flex"
+            to="/contact#devis"
+            className="hidden sm:inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded bg-light-primary text-light-on-primary font-label text-sm font-semibold tracking-wide transition-colors duration-150 hover:bg-dark-surface-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-argent-metallique"
           >
-            Nous contacter
+            <span>Demander un devis</span>
           </Link>
+
           <button
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center border border-silver/20 text-ivory lg:hidden"
             aria-expanded={open}
-            aria-controls="mobile-menu"
+            aria-controls="mobile-menu-drawer"
             aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
-            onClick={() => setOpen((value) => !value)}
+            onClick={() => setOpen((prev) => !prev)}
+            className="lg:hidden inline-flex items-center justify-center w-11 h-11 rounded border border-dark-outline-variant bg-dark-surface-container-low text-dark-on-surface transition-colors hover:bg-dark-surface-container"
           >
-            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            <span className="material-symbols-outlined text-[22px]" aria-hidden="true">
+              {open ? "close" : "menu"}
+            </span>
           </button>
         </div>
       </div>
 
-      {open ? (
+      {/* Menu mobile */}
+      {open && (
         <div
-          id="mobile-menu"
-          className="border-t border-silver/15 bg-carbon lg:hidden"
+          id="mobile-menu-drawer"
+          className="lg:hidden bg-dark-surface-container-low border-t border-dark-outline-variant px-5 py-6"
         >
-          <nav className="flex flex-col px-4 py-4" aria-label="Navigation mobile">
-            {navLinks.map((link) => (
-              <NavLink
-                key={link.to}
-                to={link.to}
-                onClick={() => setOpen(false)}
-                className={({ isActive }) =>
-                  `border-b border-silver/10 py-3.5 text-base ${
-                    isActive ? "text-ivory" : "text-silver"
-                  }`
-                }
-                end={link.to === "/"}
-              >
-                {link.label}
-              </NavLink>
-            ))}
-            <Link
-              to="/contact"
-              onClick={() => setOpen(false)}
-              className="mt-4 bg-crimson py-3 text-center font-display text-sm font-semibold uppercase tracking-[0.16em] text-white"
+          <nav aria-label="Navigation mobile" className="flex flex-col gap-2">
+            <NavLink
+              to="/"
+              end
+              className={({ isActive }) =>
+                `px-4 py-3 rounded font-label text-sm font-semibold transition-colors ${
+                  isActive
+                    ? "bg-dark-surface-container text-dark-on-surface border-l-2 border-rouge-profond"
+                    : "text-argent-metallique hover:bg-dark-surface-container hover:text-dark-on-surface"
+                }`
+              }
             >
-              Nous contacter
-            </Link>
+              Accueil
+            </NavLink>
+            <NavLink
+              to="/produits"
+              className={({ isActive }) =>
+                `px-4 py-3 rounded font-label text-sm font-semibold transition-colors ${
+                  isActive
+                    ? "bg-dark-surface-container text-dark-on-surface border-l-2 border-rouge-profond"
+                    : "text-argent-metallique hover:bg-dark-surface-container hover:text-dark-on-surface"
+                }`
+              }
+            >
+              Nos pièces
+            </NavLink>
+            <NavLink
+              to="/services"
+              className={({ isActive }) =>
+                `px-4 py-3 rounded font-label text-sm font-semibold transition-colors ${
+                  isActive
+                    ? "bg-dark-surface-container text-dark-on-surface border-l-2 border-rouge-profond"
+                    : "text-argent-metallique hover:bg-dark-surface-container hover:text-dark-on-surface"
+                }`
+              }
+            >
+              Nos prestations
+            </NavLink>
+            <NavLink
+              to="/a-propos"
+              className={({ isActive }) =>
+                `px-4 py-3 rounded font-label text-sm font-semibold transition-colors ${
+                  isActive
+                    ? "bg-dark-surface-container text-dark-on-surface border-l-2 border-rouge-profond"
+                    : "text-argent-metallique hover:bg-dark-surface-container hover:text-dark-on-surface"
+                }`
+              }
+            >
+              À propos
+            </NavLink>
+            <NavLink
+              to="/contact"
+              className={({ isActive }) =>
+                `px-4 py-3 rounded font-label text-sm font-semibold transition-colors ${
+                  isActive
+                    ? "bg-dark-surface-container text-dark-on-surface border-l-2 border-rouge-profond"
+                    : "text-argent-metallique hover:bg-dark-surface-container hover:text-dark-on-surface"
+                }`
+              }
+            >
+              Contact
+            </NavLink>
+
+            <div className="pt-3 border-t border-dark-outline-variant grid grid-cols-1 gap-2">
+              <Link
+                to="/contact#devis"
+                className="inline-flex items-center justify-center px-6 py-3 rounded bg-light-primary text-light-on-primary font-label text-sm font-semibold"
+              >
+                Demander un devis
+              </Link>
+              <div className="grid grid-cols-2 gap-2">
+                <a
+                  href={company.phone.href}
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded border border-dark-outline-variant text-dark-on-surface font-label text-xs font-semibold"
+                >
+                  <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
+                    call
+                  </span>
+                  <span>Appeler</span>
+                </a>
+                <a
+                  href={company.whatsapp.baseUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded border border-dark-outline-variant text-dark-on-surface font-label text-xs font-semibold"
+                >
+                  <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
+                    chat
+                  </span>
+                  <span>WhatsApp</span>
+                </a>
+              </div>
+            </div>
           </nav>
         </div>
-      ) : null}
+      )}
     </header>
   );
 }

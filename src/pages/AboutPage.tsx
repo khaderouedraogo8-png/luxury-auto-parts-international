@@ -1,70 +1,138 @@
+import { Link } from "react-router-dom";
 import { Seo } from "../components/seo/Seo";
-import { ButtonLink } from "../components/ui/ButtonLink";
 import { company } from "../data/company";
-import { productCategories } from "../data/products";
 
 export function AboutPage() {
   return (
     <>
       <Seo
         title={`À propos — ${company.legalName}`}
-        description={`${company.legalName} commercialise des pièces de carrosserie automobile et propose des prestations de pose, de remplacement et d’installation. ${company.slogan}`}
+        description={`${company.legalName} à Ouagadougou : spécialiste de la fourniture de pièces de carrosserie automobile et des prestations techniques de pose, remplacement et installation. ${company.slogan}`}
         path="/a-propos"
       />
 
-      <section className="relative overflow-hidden border-b border-silver/10">
-        <img
-          src="/images/about.jpg"
-          alt="Ligne de carrosserie d’un véhicule"
-          className="absolute inset-0 h-full w-full object-cover opacity-35"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-carbon via-carbon/80 to-carbon/50" />
-        <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
-          <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-crimson">
-            Identité
-          </p>
-          <h1 className="mt-4 max-w-4xl font-display text-4xl font-bold uppercase leading-[0.95] text-ivory sm:text-6xl">
-            {company.legalName}
-          </h1>
-          <p className="mt-6 max-w-xl text-xl italic text-ivory">« {company.slogan} »</p>
+      {/* Introduction institutionnelle */}
+      <section className="bg-dark-surface text-dark-on-surface border-b border-dark-outline-variant">
+        <div className="max-w-7xl mx-auto px-page-margin md:px-gutter-xl py-12 md:py-20 flex flex-col gap-gutter-xl">
+          <div className="max-w-3xl flex flex-col gap-gutter-md">
+            <span className="font-label text-label-sm uppercase tracking-widest text-argent-metallique">
+              À propos
+            </span>
+            <h1 className="font-display text-display-lg-mobile md:text-display-lg text-dark-on-surface text-balance">
+              {company.legalName}
+            </h1>
+            <p className="font-body text-body-lg text-dark-on-surface-variant text-pretty">
+              « {company.slogan} » — Votre partenaire spécialisé dans la fourniture de pièces de carrosserie automobile et les prestations techniques de pose, remplacement et installation à Ouagadougou.
+            </p>
+          </div>
+
+          <div className="rounded-lg overflow-hidden border border-dark-outline-variant bg-dark-surface-container-low">
+            <img
+              src="/images/about.jpg"
+              alt="Atelier et centre automobile Luxury Auto Parts International"
+              className="w-full aspect-[16/9] object-cover"
+              loading="lazy"
+            />
+          </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:grid lg:grid-cols-12 lg:gap-16 lg:px-8 lg:py-24">
-        <div className="lg:col-span-7">
-          <h2 className="font-display text-3xl font-semibold uppercase text-ivory">
-            Notre domaine d’activité
-          </h2>
-          <p className="mt-5 text-base leading-relaxed text-silver">
-            {company.legalName} est une entreprise spécialisée dans la commercialisation de pièces
-            de carrosserie automobile et dans les services professionnels de pose, de remplacement
-            et d’installation.
-          </p>
-          <p className="mt-4 text-base leading-relaxed text-silver">
-            L’offre s’adresse aux automobilistes comme aux professionnels à la recherche d’un
-            interlocuteur clair pour le vitrage, les pare-chocs, l’éclairage et les accessoires
-            extérieurs. Chaque demande est traitée à partir des informations du véhicule et du
-            besoin exprimé.
-          </p>
-          <p className="mt-4 text-base leading-relaxed text-silver">
-            La proposition de valeur repose sur trois piliers : des pièces de carrosserie
-            sélectionnées pour leur usage, une compétence technique pour la mise en place, et un
-            contact direct pour avancer sans détour.
-          </p>
-        </div>
-        <aside className="mt-10 border border-silver/15 bg-steel p-6 lg:col-span-5 lg:mt-0">
-          <h2 className="font-display text-xl uppercase text-ivory">Spécialités</h2>
-          <ul className="mt-4 space-y-3 text-sm text-silver">
-            {productCategories.map((item) => (
-              <li key={item.slug} className="border-b border-silver/10 pb-3">
-                {item.title}
-              </li>
-            ))}
-          </ul>
-          <div className="mt-6">
-            <ButtonLink to="/contact">Nous contacter</ButtonLink>
+      {/* Positionnement et deux domaines d'activité */}
+      <section className="bg-light-surface py-16 md:py-24 border-b border-light-outline-variant">
+        <div className="max-w-7xl mx-auto px-page-margin md:px-gutter-xl grid grid-cols-1 lg:grid-cols-12 gap-gutter-xl">
+          <div className="lg:col-span-5 flex flex-col gap-gutter-md">
+            <span className="font-label text-label-sm uppercase tracking-widest text-light-primary">
+              Positionnement
+            </span>
+            <h2 className="font-display text-display-md-mobile md:text-display-md text-light-on-surface text-balance">
+              Une expertise dédiée à la carrosserie et au vitrage.
+            </h2>
+            <p className="font-body text-body-lg text-light-on-surface-variant text-pretty">
+              Luxury Auto Parts International répond aux besoins des conducteurs et professionnels exigeants en réunissant sous une même enseigne l’approvisionnement en pièces de carrosserie et l’exécution technique de leur pose.
+            </p>
           </div>
-        </aside>
+
+          <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-gutter-lg">
+            <div className="bg-light-surface-container-low border border-light-outline-variant rounded-lg p-gutter-lg flex flex-col gap-gutter-sm">
+              <span className="material-symbols-outlined text-[28px] text-light-primary" aria-hidden="true">
+                inventory_2
+              </span>
+              <h3 className="font-title text-title-lg text-light-on-surface">
+                Fourniture de pièces automobiles
+              </h3>
+              <p className="font-body text-body-md text-light-on-surface-variant text-pretty">
+                Vitres et pare-brise, pare-chocs avant et arrière, phares avant, feux arrière et accessoires de carrosserie adaptés à chaque véhicule.
+              </p>
+            </div>
+            <div className="bg-light-surface-container-low border border-light-outline-variant rounded-lg p-gutter-lg flex flex-col gap-gutter-sm">
+              <span className="material-symbols-outlined text-[28px] text-light-primary" aria-hidden="true">
+                handyman
+              </span>
+              <h3 className="font-title text-title-lg text-light-on-surface">
+                Prestations techniques
+              </h3>
+              <p className="font-body text-body-md text-light-on-surface-variant text-pretty">
+                Pose de pièces automobiles, remplacement de composants endommagés, installation de pare-brise et vitres et interventions liées à la carrosserie.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Engagements qualité et service */}
+      <section className="bg-light-surface-container-low py-16 md:py-24">
+        <div className="max-w-7xl mx-auto px-page-margin md:px-gutter-xl flex flex-col gap-gutter-xl">
+          <div className="max-w-2xl flex flex-col gap-gutter-sm">
+            <span className="font-label text-label-sm uppercase tracking-widest text-light-primary">
+              Nos engagements
+            </span>
+            <h2 className="font-display text-display-md-mobile md:text-display-md text-light-on-surface">
+              Qualité, clarté et accompagnement.
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter-lg">
+            <div className="bg-light-surface border border-light-outline-variant rounded-lg p-gutter-lg flex flex-col gap-gutter-sm">
+              <h3 className="font-title text-title-lg text-light-on-surface">
+                Exigence de qualité
+              </h3>
+              <p className="font-body text-body-md text-light-on-surface-variant text-pretty">
+                Chaque pièce proposée et chaque intervention technique vise à préserver l’esthétique, la sécurité et la durabilité du véhicule.
+              </p>
+            </div>
+            <div className="bg-light-surface border border-light-outline-variant rounded-lg p-gutter-lg flex flex-col gap-gutter-sm">
+              <h3 className="font-title text-title-lg text-light-on-surface">
+                Liberté de choix
+              </h3>
+              <p className="font-body text-body-md text-light-on-surface-variant text-pretty">
+                Le client choisit librement entre l’achat de la pièce seule ou un accompagnement complet incluant la fourniture et la pose.
+              </p>
+            </div>
+            <div className="bg-light-surface border border-light-outline-variant rounded-lg p-gutter-lg flex flex-col gap-gutter-sm">
+              <h3 className="font-title text-title-lg text-light-on-surface">
+                Écoute et réactivité
+              </h3>
+              <p className="font-body text-body-md text-light-on-surface-variant text-pretty">
+                Un interlocuteur direct par téléphone ou WhatsApp pour étudier chaque besoin avec attention et précision.
+              </p>
+            </div>
+          </div>
+
+          <div className="pt-gutter-md flex flex-col sm:flex-row items-start sm:items-center gap-gutter-md">
+            <Link
+              to="/contact#devis"
+              className="inline-flex items-center justify-center px-gutter-xl py-3.5 rounded bg-light-primary text-light-on-primary font-label text-label-lg hover:bg-noir-profond transition-colors duration-state-change"
+            >
+              Demander un devis
+            </Link>
+            <Link
+              to="/produits"
+              className="inline-flex items-center justify-center px-gutter-xl py-3.5 rounded border border-noir-profond text-light-on-surface font-label text-label-lg hover:bg-light-surface transition-colors duration-state-change"
+            >
+              Découvrir nos pièces
+            </Link>
+          </div>
+        </div>
       </section>
     </>
   );
